@@ -1,8 +1,6 @@
 package ua.edu.ucu.tempseries;
 
-import jdk.internal.util.xml.impl.Input;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
@@ -109,6 +107,7 @@ public class TemperatureSeriesAnalysis {
         for (int i = 0; i < this.len; i++) {
             if (this.temperatureSeries[i] < tempValue) {
                 lessSeries[ind] = this.temperatureSeries[i];
+                ind++;
             }
         }
         return lessSeries;
@@ -127,6 +126,7 @@ public class TemperatureSeriesAnalysis {
         for (int i = 0; i < this.len; i++) {
             if (this.temperatureSeries[i] >= tempValue) {
                 greaterSeries[ind] = this.temperatureSeries[i];
+                ind++;
             }
         }
         return greaterSeries;
@@ -139,6 +139,7 @@ public class TemperatureSeriesAnalysis {
         summary.devTemp = this.deviation();
         summary.maxTemp = this.max();
         summary.minTemp = this.min();
+        return summary;
     }
 
     public int addTemps(double... temps) {
