@@ -7,6 +7,7 @@ import java.util.InputMismatchException;
 public class TemperatureSeriesAnalysis {
     double[] temperatureSeries;
     int len;
+    final double THRESHOLD = .00001;
 
     public TemperatureSeriesAnalysis() {
         this.temperatureSeries = new double[]{0};
@@ -15,7 +16,7 @@ public class TemperatureSeriesAnalysis {
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
         this.len = temperatureSeries.length;
-        this.temperatureSeries = temperatureSeries;
+        this.temperatureSeries = Arrays.copyOf(temperatureSeries, temperatureSeries.length);
         for (double i :
                 temperatureSeries) {
             if (i < -273) {
@@ -74,7 +75,7 @@ public class TemperatureSeriesAnalysis {
         double cls = this.temperatureSeries[0];
         for (double i :
                 this.temperatureSeries) {
-            if ((Math.abs(i) < Math.abs(cls)) || (i == Math.abs(cls))) {
+            if (Math.abs(i) < Math.abs(cls) || Math.abs(i - Math.abs(cls)) < THRESHOLD) {
                 cls = i;
             }
         }
