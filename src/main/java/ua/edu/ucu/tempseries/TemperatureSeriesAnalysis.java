@@ -14,12 +14,12 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        final int absZero = -273;
-        this.len = temperatureSeries.length;
+        final int ABSZERO = -273;
         this.temperatureSeries = Arrays.copyOf(temperatureSeries,
                 temperatureSeries.length);
+        this.len = this.temperatureSeries.length;
         for (double i : temperatureSeries) {
-            if (i < -absZero) {
+            if (i < -ABSZERO) {
                 throw new InputMismatchException(
                         "Temperature can't be less then absolute zero !!!");
             }
@@ -71,11 +71,11 @@ public class TemperatureSeriesAnalysis {
 
     public double findTempClosestToZero() {
         isEmpty();
-        final double accuracy = .00001;
+        final double ACCURACY = .00001;
         double cls = this.temperatureSeries[0];
         for (double i : this.temperatureSeries) {
-            if (Math.abs(i) < Math.abs(cls) ||
-                    Math.abs(i - Math.abs(cls)) < accuracy) {
+            if (Math.abs(i) < Math.abs(cls) || Math.abs(
+                    i - Math.abs(cls)) < ACCURACY) {
                 cls = i;
             }
         }
