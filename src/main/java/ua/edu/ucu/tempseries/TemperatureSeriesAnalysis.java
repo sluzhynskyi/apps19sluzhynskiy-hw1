@@ -5,9 +5,8 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 
 public class TemperatureSeriesAnalysis {
-    double[] temperatureSeries;
-    int len;
-    final double THRESHOLD = .00001;
+    private double[] temperatureSeries;
+    private int len;
 
     public TemperatureSeriesAnalysis() {
         this.temperatureSeries = new double[]{0};
@@ -15,22 +14,23 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
+        final int absZero = -273;
         this.len = temperatureSeries.length;
-        this.temperatureSeries = Arrays.copyOf(temperatureSeries, temperatureSeries.length);
-        for (double i :
-                temperatureSeries) {
-            if (i < -273) {
-                throw new InputMismatchException("Temperature can't be less then absolute zero !!!");
+        this.temperatureSeries = Arrays.copyOf(temperatureSeries,
+                temperatureSeries.length);
+        for (double i : temperatureSeries) {
+            if (i < -absZero) {
+                throw new InputMismatchException(
+                        "Temperature can't be less then absolute zero !!!");
             }
         }
     }
 
 
     public double average() {
-        is_empty();
+        isEmpty();
         double sum = 0;
-        for (double i :
-                this.temperatureSeries) {
+        for (double i : this.temperatureSeries) {
             sum += i;
         }
         return sum / (double) this.len;
@@ -38,18 +38,17 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double deviation() {
-        is_empty();
+        isEmpty();
         double average = this.average();
-        double sq_sum = 0;
-        for (double i :
-                this.temperatureSeries) {
-            sq_sum += Math.pow(i - average, 2);
+        double sqSum = 0;
+        for (double i : this.temperatureSeries) {
+            sqSum += (i - average) * (i - average);
         }
-        return Math.sqrt(sq_sum / (double) this.len);
+        return Math.sqrt(sqSum / (double) this.len);
     }
 
     public double min() {
-        is_empty();
+        isEmpty();
         double min = this.temperatureSeries[0];
         for (double i : this.temperatureSeries) {
             if (i < min) {
@@ -60,7 +59,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double max() {
-        is_empty();
+        isEmpty();
         double max = this.temperatureSeries[0];
         for (double i : this.temperatureSeries) {
             if (i > max) {
@@ -71,11 +70,12 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double findTempClosestToZero() {
-        is_empty();
+        isEmpty();
+        final double accuracy = .00001;
         double cls = this.temperatureSeries[0];
-        for (double i :
-                this.temperatureSeries) {
-            if (Math.abs(i) < Math.abs(cls) || Math.abs(i - Math.abs(cls)) < THRESHOLD) {
+        for (double i : this.temperatureSeries) {
+            if (Math.abs(i) < Math.abs(cls) ||
+                    Math.abs(i - Math.abs(cls)) < accuracy) {
                 cls = i;
             }
         }
@@ -84,7 +84,7 @@ public class TemperatureSeriesAnalysis {
 
 
     public double findTempClosestToValue(double tempValue) {
-        is_empty();
+        isEmpty();
         double[] tempSeries = Arrays.copyOf(this.temperatureSeries, this.len);
         for (int i = 0; i < this.len; i++) {
             this.temperatureSeries[i] -= tempValue;
@@ -96,15 +96,15 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double[] findTempsLessThen(double tempValue) {
-        is_empty();
-        int N = 0;
+        isEmpty();
+        int n = 0;
         int ind = 0;
         for (int i = 0; i < this.len; i++) {
             if (this.temperatureSeries[i] < tempValue) {
-                N += 1;
+                n += 1;
             }
         }
-        double[] lessSeries = new double[N];
+        double[] lessSeries = new double[n];
         for (int i = 0; i < this.len; i++) {
             if (this.temperatureSeries[i] < tempValue) {
                 lessSeries[ind] = this.temperatureSeries[i];
@@ -115,15 +115,15 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double[] findTempsGreaterThen(double tempValue) {
-        is_empty();
-        int N = 0;
+        isEmpty();
+        int n = 0;
         int ind = 0;
         for (int i = 0; i < this.len; i++) {
             if (this.temperatureSeries[i] >= tempValue) {
-                N += 1;
+                n += 1;
             }
         }
-        double[] greaterSeries = new double[N];
+        double[] greaterSeries = new double[n];
         for (int i = 0; i < this.len; i++) {
             if (this.temperatureSeries[i] >= tempValue) {
                 greaterSeries[ind] = this.temperatureSeries[i];
@@ -134,7 +134,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TempSummaryStatistics summaryStatistics() {
-        is_empty();
+        isEmpty();
         TempSummaryStatistics summary = new TempSummaryStatistics();
         summary.avgTemp = this.average();
         summary.devTemp = this.deviation();
@@ -144,21 +144,22 @@ public class TemperatureSeriesAnalysis {
     }
 
     public int addTemps(double... temps) {
-        int N = this.temperatureSeries.length + temps.length;
+        int n = this.temperatureSeries.length + temps.length;
         double[] tempSeries = Arrays.copyOf(this.temperatureSeries, this.len);
-        this.temperatureSeries = new double[N];
+        this.temperatureSeries = new double[n];
         for (int i = 0; i < tempSeries.length; i++) {
             this.temperatureSeries[i] = tempSeries[i];
         }
-        for (int i = tempSeries.length, j = 0; i < N; i++, j++) {
+        for (int i = tempSeries.length, j = 0; i < n; i++, j++) {
             this.temperatureSeries[i] = temps[j];
         }
-        return N;
+        return n;
     }
 
-    private void is_empty() {
+    private void isEmpty() {
         if (this.len == 0) {
-            throw new IllegalArgumentException("Len of series must be at least = 1");
+            throw new IllegalArgumentException(
+                    "Len of series must be at least = 1");
         }
     }
 }
