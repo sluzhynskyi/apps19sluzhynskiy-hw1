@@ -19,7 +19,7 @@ public class TemperatureSeriesAnalysis {
                 temperatureSeries.length);
         this.len = this.temperatureSeries.length;
         for (double i : temperatureSeries) {
-            if (i < -ABSZERO) {
+            if (i < ABSZERO) {
                 throw new InputMismatchException(
                         "Temperature can't be less then absolute zero !!!");
             }
