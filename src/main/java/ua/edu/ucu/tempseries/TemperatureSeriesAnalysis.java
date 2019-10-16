@@ -136,10 +136,10 @@ public class TemperatureSeriesAnalysis {
     public TempSummaryStatistics summaryStatistics() {
         isEmpty();
         TempSummaryStatistics summary = new TempSummaryStatistics();
-        summary.avgTemp = this.average();
-        summary.devTemp = this.deviation();
-        summary.maxTemp = this.max();
-        summary.minTemp = this.min();
+        summary.setAvgTemp(this.average());
+        summary.setDevTemp(this.deviation());
+        summary.setMaxTemp(this.max());
+        summary.setMinTemp(this.min());
         return summary;
     }
 
