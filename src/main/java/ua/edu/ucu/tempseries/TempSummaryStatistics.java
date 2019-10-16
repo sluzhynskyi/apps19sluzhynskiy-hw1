@@ -1,8 +1,8 @@
 package ua.edu.ucu.tempseries;
 
 public class TempSummaryStatistics {
-    double avgTemp;
-    double devTemp;
-    double minTemp;
-    double maxTemp;
+    protected double avgTemp;
+    protected double devTemp;
+    protected double minTemp;
+    protected double maxTemp;
 }
