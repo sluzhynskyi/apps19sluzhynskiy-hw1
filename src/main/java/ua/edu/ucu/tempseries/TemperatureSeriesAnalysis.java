@@ -136,7 +136,7 @@ public class TemperatureSeriesAnalysis {
     public TempSummaryStatistics summaryStatistics() {
         isEmpty();
         TempSummaryStatistics summary = new TempSummaryStatistics(
-                this.average(), this.deviation(), this.min(),this.max());
+                this.average(), this.deviation(), this.min(), this.max());
         return summary;
     }
 
