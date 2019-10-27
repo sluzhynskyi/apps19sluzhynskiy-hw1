@@ -9,7 +9,8 @@ public class TemperatureSeriesAnalysis {
     private int len;
 
     public TemperatureSeriesAnalysis() {
-        this.temperatureSeries = new double[]{0};
+        this.temperatureSeries = new double[]{};
+        this.len = 0;
 
     }
 
@@ -150,6 +151,7 @@ public class TemperatureSeriesAnalysis {
         for (int i = tempSeries.length, j = 0; i < n; i++, j++) {
             this.temperatureSeries[i] = temps[j];
         }
+        this.len = n;
         return n;
     }
 
